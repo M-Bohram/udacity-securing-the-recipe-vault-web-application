@@ -1,3 +1,24 @@
 Research and analyze which of the vulnerabilities appear to be related to the code that was deployed for the environment in this project.
 
-Bonus - provide recommendations on how to remediate the vulnerabilities.
+S3
+- The block public access is disabled
+- The data is not encrypted at rest (server-side encryption)
+
+EBS
+- The data is not encrypted at rest
+
+WebAppEC2
+- It has a public IP
+- It is not managed by SSM
+
+WebAppSG
+- It has open ports (22 SSH, 3389 RDP) for the whole world, and they should be restricted
+
+Recommendations on how to remediate the vulnerabilities:
+
+1- Move the WebApp EC2 to a private subnet and make it access the internet using NAT gateway
+2- Accessing the EC2 instance should be done using SSM session manager or from a hardened bastion host server that has public access but from certain IP's only
+3- Restrict the IP's that can SSH or RDP to the WebAppSG to the admins IP's
+4- Use EBS encrypted volumes (copy the current EBS volume and encrypted using KMS and replace it with the current one)
+5- Enable block public access in S3 and use VPC endpoint to connect the EC2 instance with the bucket
+6- Enable server-side encryption in the S3 bucket

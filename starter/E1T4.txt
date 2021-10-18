@@ -1,0 +1,19 @@
+Based on the architecture diagram, and the steps you have taken so far to upload data and access the application web service, identify at least 2 obvious poor practices as it relates to security.  Include justification.
+
+# Poor practice 1
+Both S3 buckets have public access, so it should be restricted and allowed within the VPC using VPC endpoint to the EC2 instance.
+
+# Poor practice 2
+Using HTTP endpoint instead of HTTPS in the ALB which is not secure (data is not encrypted in transit)
+
+# Poor practice 3
+The private subnet has route to the internet as the IGW is the target, so a malicious resource would communicate with any endpoint in the internet
+
+# Poor practice 4
+The ALB should be in a public subnet, however, the Web App should not be in a public subnet to reduce the risk of being attacked
+
+# Poor practice 5
+The Web App's security group should only allow traffic from the ALB SG with the used ports only to reduce the risk of being attacked
+
+# Poor practice 6
+The IAM role of the EC2 has administrative access to S3, this is not recommended, according to the least privilege principle, the EC2 instance should have the permissions required only to reduce the damage in case of the system being hacked

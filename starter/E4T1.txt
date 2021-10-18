@@ -1,5 +1,10 @@
-
-
 # Identify 2-3 changes that can be made to our environment to prevent an ssh brute force attack from the internet.
 
+- Disable the password login on the WebApp EC2 instance
+- Move the EC2 instance to a private subnet so it does not have a public routable IP.
+- Limit the access to the instance (WebAppSG) to the admins IP's only.
+
 # Neither instance should have had access to the secret recipes bucket, in the even that instance API credentials were compromised how could we have prevented access to sensitive data.
+
+- Use least privilege access for the existing instance role profile to only allow access to specific buckets rather than using a wildcard(*).
+- Implement a bucket policy to restrict access.

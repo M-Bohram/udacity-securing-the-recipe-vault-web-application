@@ -1,8 +1,19 @@
 
 # What additional architectural change can be made to reduce the internet facing attack surface of the web application instance.
 
+1- Disable SSH access to the WebApp EC2 instance and rely on either a hardened bastion host or SSM to access the instance.
+2- Move the EC2 instance to a private subnet with no routable IP and being accessed from ALB only and SSH IP's of the admin users only.
+
 # Assuming the IAM permissions for the S3 bucket are still insecure, would creating VPC private endpoints for S3 prevent the unauthorized access to the secrets bucket.
+
+A VPC endpoint enables you to privately connect your VPC to supported AWS services and VPC endpoint services 
+powered by AWS PrivateLink without requiring going to the internet and then to the S3 bucket or other AWS services, 
+but even with that there is a risk of a malicious attack from the EC2 instance of the Web App.
 
 # Will applying default encryption setting to the s3 buckets encrypt the data that already exists?
 
+No, applying default encryption will not encrypt the existing files, just the future objects only, you have to encrypt the existing files (objects) manually.
+
 # What would happen if the original cloud formation templates are applied to this environment.
+
+The changes were made will be reverted or overridden by the next next cloudformation deployment.
